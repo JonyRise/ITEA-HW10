@@ -11,24 +11,20 @@ from users import User
 Зберігання в середині одного списку бази даних 
 '''
 
+user_db = DB('users.json') # singletone
 
-class UserAuthenticate:
-    user_db = DB('users.json') # singletone
-    system_user:User
-
-    def register(self, user:User):
-        if self.user_db.get(user.get_uniq_key()):
-            print(f"User with login {user.login} and role {user.role} already exists!")
-            return
-        self.user_db.append(user.get_uniq_key(), {'login': user.login, 'password': user.get_password(), 'role': user.role})
+def register(user:User): 
+    if not user_db.get(user.get_uniq_key()):
+        user_db.append(user.get_uniq_key(), {'login': user.login, 'password': user.get_password(), 'role': user.role})
         print(f"User {user.login} with role {user.role} has been registered!")
+    else:
+        print(f"User with login {user.login} and role {user.role} already exists!")
         
-    def auth(self, user:User):
-        user_in_db = self.user_db.get(user.get_uniq_key())
-        if user_in_db and user_in_db.get('password') == user.get_password():
-            print(f"User {user.login} with role {user.role} in system!")
-            self.system_user = user
-            return True
-        print("Invalid login or password!")
-        return False
+def auth(user:User):
+    user_in_db = user_db.get(user.get_uniq_key())
+    if user_in_db and user_in_db.get('password') == user.get_password():
+        print(f"User {user.login} with role {user.role} in system!")
+        return True
+    print("Invalid login or password!")
+    return False
 

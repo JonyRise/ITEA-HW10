@@ -1,5 +1,5 @@
 from users import Subscriber, Author, Admin
-from authenticator import UserAuthenticate
+from authenticator import register, auth
 # № 1
 '''
 Розробити імітовану базу даних на основі списку
@@ -14,14 +14,8 @@ from authenticator import UserAuthenticate
 user1 = Subscriber('user1', 123)
 user2 = Author('user2', 456)
 user3 = Admin('user3', 789)
-authenticator = UserAuthenticate()
-authenticator.register(user1)
-authenticator.register(user2)
-authenticator.register(user3)
-authenticator.auth(user1)
-print(authenticator.system_user)
-authenticator.auth(user2)
-print(authenticator.system_user)
-authenticator.auth(user3)
-print(authenticator.system_user)
+register(user1)
+register(user2)
+print(auth(user1))
+print(auth(user3))
 
